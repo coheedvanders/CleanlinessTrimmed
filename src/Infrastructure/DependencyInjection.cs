@@ -1,8 +1,6 @@
 ﻿using CleanlinessTrimmed.Application.Common.Interfaces;
-using CleanlinessTrimmed.Domain.Constants;
 using CleanlinessTrimmed.Infrastructure.Data;
 using CleanlinessTrimmed.Infrastructure.Data.Interceptors;
-using CleanlinessTrimmed.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -37,16 +35,6 @@ public static class DependencyInjection
 
         builder.Services.AddAuthorizationBuilder();
 
-        builder.Services
-            .AddIdentityCore<ApplicationUser>()
-            .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddApiEndpoints();
-
         builder.Services.AddSingleton(TimeProvider.System);
-        builder.Services.AddTransient<IIdentityService, IdentityService>();
-
-        builder.Services.AddAuthorization(options =>
-            options.AddPolicy(Policies.CanPurge, policy => policy.RequireRole(Roles.Administrator)));
     }
 }
